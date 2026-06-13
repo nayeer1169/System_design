@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive educational playground explaining System Design principles. Features load balancing simulation, caching latency playground, database picker wizard, and an AI-narrated video presenter.">
+  <title>Interactive System Design Masterclass</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Gradients/Glows for Premium Aesthetic -->
+  <div class="glow-bg" aria-hidden="true">
+    <div class="glow-circle glow-blue"></div>
+    <div class="glow-circle glow-purple"></div>
+  </div>
+
+  <div class="app-layout">
+    
+    <!-- Top Global Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <svg class="brand-logo" viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
+          <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        <span class="brand-title">System<span class="highlight">Architect</span></span>
+      </div>
+      
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href="#section-ppt" class="nav-link">Slide Deck</a>
+        <a href="#section-lb" class="nav-link">Load Balancing</a>
+        <a href="#section-cache" class="nav-link">Caching Demo</a>
+        <a href="#section-db" class="nav-link">Database Wizard</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="theme-toggle" class="btn btn-icon" aria-label="Toggle visual theme" title="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12.3 22h-.1c-5.5 0-10-4.5-10-10C2.2 6.8 6 2.4 11.2 2c.6 0 1 .4.9 1-.1.5-.5.9-1 .9-3.9.4-6.8 3.9-6.5 7.9.3 3.6 3.2 6.6 6.8 6.9 3.5.3 6.6-1.8 7.5-5.1.2-.5.7-.8 1.2-.6.5.2.8.7.6 1.2-.8 3.3-3.6 5.8-7.1 5.8z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      
+      <!-- Hero Section -->
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-badge">System Design 101</div>
+        <h1 id="hero-title" class="hero-title">Master the Art of <span class="gradient-text">Scalable Systems</span></h1>
+        <p class="hero-subtitle">
+          Don't just write code; architect for millions. Explore latency, high availability, database trade-offs, and load balancing through hands-on interactive simulations.
+        </p>
+      </section>
+
+      <!-- Section: Interactive PPT Presentation Deck -->
+      <section id="section-ppt" class="interactive-section" aria-labelledby="ppt-title">
+        <div class="section-card">
+          <div class="card-header-with-badge">
+            <span class="card-badge">Presentation Deck</span>
+            <h2 id="ppt-title" class="card-title">Interactive System Design Slideshow</h2>
+          </div>
+          <p class="card-description">
+            Explore the core architectural patterns and trade-offs of system design. Use the navigation buttons below, the slide dots, or your keyboard's left/right arrow keys to flip slides.
+          </p>
+
+          <!-- Interactive PPT Container -->
+          <div class="ppt-deck-container" id="ppt-root">
+            
+            <!-- Slide Deck Viewport -->
+            <div class="ppt-viewport" id="slide-container">
+              
+              <!-- Slide 1 -->
+              <div class="slide active-slide" data-slide-id="0">
+                <div class="slide-header">
+                  <h3>Slide 1: What is System Design?</h3>
+                  <span class="slide-topic">Architectural Fundamentals</span>
+                </div>
+                <div class="slide-content">
+                  <ul class="slide-bullets">
+                    <li><strong>Scope</strong>: Defining components, modules, interfaces, and databases for massive scale.</li>
+                    <li><strong>Key Drivers</strong>: High traffic volumes, massive data storage, and low latency needs.</li>
+                    <li><strong>The Golden Rule</strong>: System design is an exercise in balancing trade-offs (Speed vs. Consistency vs. Resource Cost).</li>
+                  </ul>
+                  <div class="slide-graphic sd-flow-icon"></div>
+                </div>
+              </div>
+              
+              <!-- Slide 2 -->
+              <div class="slide" data-slide-id="1">
+                <div class="slide-header">
+                  <h3>Slide 2: Scalability: Scale Up vs. Scale Out</h3>
+                  <span class="slide-topic">Resource Allocation</span>
+                </div>
+                <div class="slide-content">
+                  <ul class="slide-bullets">
+                    <li><strong>Vertical Scaling (Scale Up)</strong>: Upgrading CPU/RAM. Simple but hits physical boundaries and introduces a Single Point of Failure (SPOF).</li>
+                    <li><strong>Horizontal Scaling (Scale Out)</strong>: Adding more server nodes. Operates on commodity hardware and enables high fault tolerance.</li>
+                    <li><strong>Modern Practice</strong>: Horizontal scale is standard for cloud-native web systems.</li>
+                  </ul>
+                  <div class="slide-graphic scale-flow-icon"></div>
+                </div>
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="slide" data-slide-id="2">
+                <div class="slide-header">
+                  <h3>Slide 3: Load Balancing & Traffic Control</h3>
+                  <span class="slide-topic">API Gateway & Proxying</span>
+                </div>
+                <div class="slide-content">
+                  <ul class="slide-bullets">
+                    <li><strong>Nginx/HAProxy</strong>: Sits as a reverse proxy in front of server pools to distribute requests.</li>
+                    <li><strong>Health Checks</strong>: Automatically ping servers to detect failures and route requests only to healthy nodes.</li>
+                    <li><strong>Algorithms</strong>: Round Robin (sequential distribution) and IP Hash (maintaining sticky sessions).</li>
+                  </ul>
+                  <div class="slide-graphic lb-flow-icon"></div>
+                </div>
+              </div>
+
+              <!-- Slide 4 -->
+              <div class="slide" data-slide-id="3">
+                <div class="slide-header">
+                  <h3>Slide 4: Caching Layer (RAM Cache)</h3>
+                  <span class="slide-topic">Performance Optimization</span>
+                </div>
+                <div class="slide-content">
+                  <ul class="slide-bullets">
+                    <li><strong>RAM Access</strong>: Storing key-value pairs in memory (Redis/Memcached) is 100x faster than disk access.</li>
+                    <li><strong>Cache Hit/Miss</strong>: App checks cache first (Hit). If not found (Miss), queries the DB and writes back to cache.</li>
+                    <li><strong>Trade-off</strong>: Cache eviction policies (e.g., LRU, LFU) must be managed to handle stale data.</li>
+                  </ul>
+                  <div class="slide-graphic cache-flow-icon"></div>
+                </div>
+              </div>
+
+              <!-- Slide 5 -->
+              <div class="slide" data-slide-id="4">
+                <div class="slide-header">
+                  <h3>Slide 5: Relational (SQL) vs. Non-Relational (NoSQL)</h3>
+                  <span class="slide-topic">Database Storage</span>
+                </div>
+                <div class="slide-content">
+                  <ul class="slide-bullets">
+                    <li><strong>SQL (e.g., PostgreSQL)</strong>: Predefined schemas, strict ACID compliance. Best for structured, relational transactions.</li>
+                    <li><strong>NoSQL (e.g., Cassandra, MongoDB)</strong>: Schema-less, document or key-value layouts. Built for horizontal scaling.</li>
+                    <li><strong>Strategy</strong>: Choose SQL for strong safety, and NoSQL for rapid scaling or semi-structured data.</li>
+                  </ul>
+                  <div class="slide-graphic db-flow-icon"></div>
+                </div>
+              </div>
+
+              <!-- Slide 6 -->
+              <div class="slide" data-slide-id="5">
+                <div class="slide-header">
+                  <h3>Slide 6: The CAP Theorem</h3>
+                  <span class="slide-topic">Distributed Consistency</span>
+                </div>
+                <div class="slide-content">
+                  <ul class="slide-bullets">
+                    <li><strong>Consistency (C)</strong>: Every node returns the latest write or an error.</li>
+                    <li><strong>Availability (A)</strong>: Every non-failing node returns a response without error guarantees.</li>
+                    <li><strong>Partition Tolerance (P)</strong>: System runs despite dropped network messages. You must choose CP or AP.</li>
+                  </ul>
+                  <div class="slide-graphic cap-flow-icon"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Slide Control Bar -->
+            <div class="ppt-controls-bar">
+              <div class="ppt-controls-left">
+                <button id="ppt-prev-btn" class="btn btn-secondary btn-icon" aria-label="Previous Slide">
+                  <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+                </button>
+                <button id="ppt-next-btn" class="btn btn-secondary btn-icon" aria-label="Next Slide">
+                  <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </button>
+              </div>
+
+              <!-- Dot indicator track -->
+              <div class="ppt-dots-indicator" id="ppt-dots-container">
+                <span class="ppt-dot active-dot" data-slide-to="0"></span>
+                <span class="ppt-dot" data-slide-to="1"></span>
+                <span class="ppt-dot" data-slide-to="2"></span>
+                <span class="ppt-dot" data-slide-to="3"></span>
+                <span class="ppt-dot" data-slide-to="4"></span>
+                <span class="ppt-dot" data-slide-to="5"></span>
+              </div>
+
+              <div class="ppt-controls-right">
+                <button id="ppt-autoplay-btn" class="btn btn-secondary btn-play-pause" aria-label="Toggle autoplay">
+                  <svg viewBox="0 0 24 24" width="16" height="16" class="autoplay-play-icon" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                  <svg viewBox="0 0 24 24" width="16" height="16" class="autoplay-pause-icon hidden" aria-hidden="true"><path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                  <span id="autoplay-text">Autoplay</span>
+                </button>
+                <div class="slide-indicator" id="ppt-slide-num-label">Slide 1 / 6</div>
+              </div>
+            </div>
+
+            <!-- Autoplay Progress Bar -->
+            <div class="ppt-progress-track">
+              <div class="ppt-progress-fill" id="ppt-progress-fill"></div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Load Balancing Simulator -->
+      <section id="section-lb" class="interactive-section" aria-labelledby="lb-title">
+        <div class="section-card">
+          <div class="card-header-with-badge">
+            <span class="card-badge">Layer 7 Routing</span>
+            <h2 id="lb-title" class="card-title">Load Balancer Playground</h2>
+          </div>
+          <p class="card-description">
+            Distribute user requests across multiple server nodes. Toggle routing algorithms and simulate a server failure to see how the proxy handles failovers.
+          </p>
+
+          <div class="lb-playground-layout">
+            
+            <!-- Controls Sidebar -->
+            <div class="playground-control-panel">
+              <div class="control-group">
+                <label class="control-label">Distribution Algorithm</label>
+                <div class="radio-toggle-group">
+                  <input type="radio" id="alg-rr" name="lb-algorithm" value="roundrobin" checked>
+                  <label for="alg-rr">Round Robin</label>
+                  
+                  <input type="radio" id="alg-hash" name="lb-algorithm" value="iphash">
+                  <label for="alg-hash">IP Hash (Sticky)</label>
+                </div>
+              </div>
+
+              <div class="control-group border-top">
+                <label class="control-label">Simulate Server Faults</label>
+                <div class="checkbox-wrapper">
+                  <input type="checkbox" id="srv-fail-3" class="switch-input">
+                  <label for="srv-fail-3" class="switch-label">
+                    <span class="switch-knob"></span>
+                    Disable App Server 3
+                  </label>
+                </div>
+              </div>
+
+              <div class="control-group border-top">
+                <button id="btn-send-req" class="btn btn-primary btn-full">
+                  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                  Fire Client Request
+                </button>
+              </div>
+            </div>
+
+            <!-- Visual canvas -->
+            <div class="playground-canvas-area" id="lb-canvas-container">
+              
+              <!-- Client node -->
+              <div class="canvas-node node-client" id="node-client">
+                <div class="node-icon">👤</div>
+                <div class="node-title">Clients</div>
+                <div class="client-selectors">
+                  <button class="client-btn active" data-client-ip="192.168.1.10">IP A</button>
+                  <button class="client-btn" data-client-ip="10.0.0.45">IP B</button>
+                  <button class="client-btn" data-client-ip="172.16.5.99">IP C</button>
+                </div>
+              </div>
+
+              <!-- Load Balancer Node -->
+              <div class="canvas-node node-lb" id="node-lb">
+                <div class="node-icon">⚖️</div>
+                <div class="node-title">Nginx Proxy</div>
+                <div class="node-sub">Layer 7</div>
+              </div>
+
+              <!-- Servers cluster -->
+              <div class="servers-cluster">
+                <div class="canvas-node node-server healthy" id="srv-1" data-srv-id="1">
+                  <div class="server-status-dot"></div>
+                  <div class="node-icon">🖥️</div>
+                  <div class="node-title">Server 1</div>
+                  <div class="server-counter">Processed: <span id="srv-count-1">0</span></div>
+                </div>
+
+                <div class="canvas-node node-server healthy" id="srv-2" data-srv-id="2">
+                  <div class="server-status-dot"></div>
+                  <div class="node-icon">🖥️</div>
+                  <div class="node-title">Server 2</div>
+                  <div class="server-counter">Processed: <span id="srv-count-2">0</span></div>
+                </div>
+
+                <div class="canvas-node node-server healthy" id="srv-3" data-srv-id="3">
+                  <div class="server-status-dot"></div>
+                  <div class="node-icon">🖥️</div>
+                  <div class="node-title">Server 3</div>
+                  <div class="server-counter">Processed: <span id="srv-count-3">0</span></div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Caching latency simulator -->
+      <section id="section-cache" class="interactive-section" aria-labelledby="cache-title">
+        <div class="section-card">
+          <div class="card-header-with-badge">
+            <span class="card-badge">Redis Caching</span>
+            <h2 id="cache-title" class="card-title">Caching & Latency Comparison</h2>
+          </div>
+          <p class="card-description">
+            Experience the difference between reading raw database files from physical disks and fetching values stored directly in RAM memory cache (Redis).
+          </p>
+
+          <div class="cache-playground-layout">
+            
+            <div class="cache-controls-pane">
+              <div class="control-group">
+                <label class="control-label">Access Pattern Toggle</label>
+                <div class="checkbox-wrapper">
+                  <input type="checkbox" id="cache-enable-switch" class="switch-input" checked>
+                  <label for="cache-enable-switch" class="switch-label">
+                    <span class="switch-knob"></span>
+                    Enable Redis Cache
+                  </label>
+                </div>
+              </div>
+              
+              <div class="control-group border-top">
+                <button id="btn-fetch-data" class="btn btn-primary btn-full">
+                  ⚡ Query User Record
+                </button>
+              </div>
+
+              <div class="latency-output-card">
+                <span class="latency-label">Transaction Response Time</span>
+                <span id="latency-value-display" class="latency-value">-- ms</span>
+                <span id="latency-source-badge" class="latency-source badge-outline">Ready</span>
+              </div>
+            </div>
+
+            <!-- Cache Visualization area -->
+            <div class="cache-viz-area">
+              <div class="flow-pipeline-container">
+                
+                <div class="viz-node app-server-node">
+                  <div class="viz-icon">💻</div>
+                  <div class="viz-name">App Server</div>
+                </div>
+
+                <div class="viz-paths">
+                  <!-- Cache Path -->
+                  <div class="viz-path-item path-cache" id="path-to-cache">
+                    <span class="path-label">Redis Cache (RAM)</span>
+                    <div class="path-line">
+                      <div class="flow-dot" id="dot-cache"></div>
+                    </div>
+                  </div>
+
+                  <!-- Database Path -->
+                  <div class="viz-path-item path-db" id="path-to-db">
+                    <span class="path-label">Main SQL Database (HDD/SSD)</span>
+                    <div class="path-line">
+                      <div class="flow-dot" id="dot-db"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="destinations-column">
+                  <div class="viz-node redis-node" id="node-redis-cache">
+                    <div class="viz-icon">⚡</div>
+                    <div class="viz-name">Redis</div>
+                    <div class="viz-speed">~2ms</div>
+                  </div>
+                  <div class="viz-node postgres-node" id="node-postgres-db">
+                    <div class="viz-icon">🗄️</div>
+                    <div class="viz-name">PostgreSQL</div>
+                    <div class="viz-speed">~150ms</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: SQL vs NoSQL decision engine -->
+      <section id="section-db" class="interactive-section" aria-labelledby="db-title">
+        <div class="section-card">
+          <div class="card-header-with-badge">
+            <span class="card-badge">CAP Theorem</span>
+            <h2 id="db-title" class="card-title">Database Decision Engine</h2>
+          </div>
+          <p class="card-description">
+            Answer a few quick architectural questions about your data shape, traffic loads, and consistency constraints to determine the optimal database paradigm.
+          </p>
+
+          <div class="wizard-container">
+            
+            <form id="db-wizard-form" class="wizard-form">
+              
+              <!-- Question 1 -->
+              <div class="wizard-step active-step" data-wizard-step="1">
+                <h3>1. What is the nature of your data schema?</h3>
+                <div class="wizard-options">
+                  <label class="wizard-option-card">
+                    <input type="radio" name="db-q1" value="structured" checked>
+                    <span class="option-title">Structured & Relational</span>
+                    <span class="option-desc">Highly tabular. We need strict foreign keys, multi-table joins, and rigid schemas.</span>
+                  </label>
+                  <label class="wizard-option-card">
+                    <input type="radio" name="db-q1" value="unstructured">
+                    <span class="option-title">Semi-structured / Hierarchical</span>
+                    <span class="option-desc">Highly nested, dynamic schemas, catalogs, document JSON formats, or graph relations.</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Question 2 -->
+              <div class="wizard-step" data-wizard-step="2">
+                <h3>2. What is the expected read/write write volume scale?</h3>
+                <div class="wizard-options">
+                  <label class="wizard-option-card">
+                    <input type="radio" name="db-q2" value="low-medium" checked>
+                    <span class="option-title">Low-to-Medium Writes</span>
+                    <span class="option-desc">Standard traffic scaling. Read-heavy architecture easily solved via replication and caching.</span>
+                  </label>
+                  <label class="wizard-option-card">
+                    <input type="radio" name="db-q2" value="massive">
+                    <span class="option-title">Massive, High-Throughput Writes</span>
+                    <span class="option-desc">Heavy real-time metrics logs, IoT sensors, or chat streams requiring seamless horizontal sharding.</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Question 3 -->
+              <div class="wizard-step" data-wizard-step="3">
+                <h3>3. Do you require strict transactional ACID compliance?</h3>
+                <div class="wizard-options">
+                  <label class="wizard-option-card">
+                    <input type="radio" name="db-q3" value="strict" checked>
+                    <span class="option-title">Strict Consistency (ACID)</span>
+                    <span class="option-desc">Financial entries, ledger balances, or core user account changes where a stale read is unacceptable.</span>
+                  </label>
+                  <label class="wizard-option-card">
+                    <input type="radio" name="db-q3" value="eventual">
+                    <span class="option-title">Eventual Consistency (BASE)</span>
+                    <span class="option-desc">Social posts, comments, notifications, or metrics where delay in propagating updates is acceptable.</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Wizard Footer Controls -->
+              <div class="wizard-footer">
+                <button type="button" id="btn-wizard-prev" class="btn btn-secondary hidden">Previous</button>
+                <button type="button" id="btn-wizard-next" class="btn btn-primary">Next Question</button>
+                <button type="submit" id="btn-wizard-submit" class="btn btn-glow hidden">Analyze Database Choice</button>
+              </div>
+
+            </form>
+
+            <!-- Diagnostic Result Pane (Hidden initially) -->
+            <div id="wizard-result-pane" class="wizard-result-pane hidden">
+              <div class="result-header">
+                <div class="result-icon-wrap" id="result-icon">🗄️</div>
+                <div>
+                  <h3 class="result-title" id="result-title">PostgreSQL Recommended</h3>
+                  <p class="result-category" id="result-category">Relational DB (SQL)</p>
+                </div>
+              </div>
+              
+              <div class="result-explanation">
+                <p id="result-text-summary">Your constraints require relational consistency, strict ACID transactions, and structured schemas. A relational database fits perfectly.</p>
+                
+                <div class="cap-metric-card">
+                  <strong>CAP Theorem Classification:</strong>
+                  <span id="result-cap-type" class="badge">CP (Consistency + Partition Tolerance)</span>
+                </div>
+              </div>
+
+              <button type="button" id="btn-wizard-reset" class="btn btn-secondary">Start Over</button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>&copy; 2026 System Design Masterclass. Built for visual learners.</p>
+        <div class="footer-links">
+          <a href="#section-ppt">Presentation</a>
+          <a href="#section-lb">Load Balancer</a>
+          <a href="#section-cache">Cache</a>
+          <a href="#section-db">Database Wizard</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Core Controller Script -->
+  <script src="app.js" defer></script>
+</body>
+</html>
